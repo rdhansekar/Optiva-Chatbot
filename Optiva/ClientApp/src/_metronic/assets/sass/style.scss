@@ -1,0 +1,467 @@
+//
+// Theme style
+//
+
+// Initialize
+@import "init";
+
+// Components
+@import "./core/components/components";
+@import "components/components";
+
+// Layout
+@import "layout/layout";
+
+@import "rsuite/dist/rsuite.css";
+// custom css Manu
+
+body {
+  font-family:sans-serif;
+  line-height: 1.4;
+  background-color: var(--bs-gray-200) !important;
+  height: 100%;
+  overflow: hidden;
+}
+#root{
+  overflow: auto;
+}
+.page , .wrapper {
+  height: 100%;
+
+}
+#kt_content_container{
+  overflow: auto;
+  height: calc(100% - 45px);
+  padding:30px 30px;
+}
+
+/* Base styles */
+.or::before,
+.or::after {
+  content: "";
+}
+
+/* 
+  Vertical 
+  Requires a height to be set on this element or its parent.
+*/
+.or--y {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+}
+
+/* 
+  Absolutely position each pseudo element, and calculate
+  a height shorter than 50% using em units to create space
+  around the text and allows divider line height to scale 
+  based on parent element divider height.
+*/
+.or--y::before,
+.or--y::after {
+  position: absolute;
+  border-left: 1px solid #ccc;
+  height: calc(50% - 0.85em);
+  left: 50%;
+  margin-left: -1px;
+}
+
+/* ::before on top */
+.or--y::before {
+  top: 0;
+}
+/* ::after on bottom */
+.or--y::after {
+  bottom: 0;
+}
+/* Horizontal */
+.or--x::before,
+.or--x::after {
+    position: relative;
+    border-top: 1px solid #ccc;
+    display: inline-block;
+    vertical-align: middle;
+    width: 80%;
+    margin-bottom: 0.15em;
+    overflow: hidden;
+}
+
+.or--x::before {
+  right: 1.5em;
+  margin-left: -80%;
+}
+.or--x::after {
+  left: 1.5em;
+  margin-right: -80%;
+}
+ .or {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.75em;
+  margin: 2em auto;
+}
+
+.or--x {
+  max-width: 30em;
+}
+.or--y {
+  height: 4em;
+}
+.form-control {
+  height: 43.56px;
+}
+.select_search .css-13cymwt-control,
+.select_search .css-t3ipsp-control{
+  font-size: 13px;
+  background-color:$input-solid-bg !important;
+  border: none !important;
+  box-shadow:none !important;
+}
+.info_box{
+    background-color: rgba(255,229,100,.2);
+    border-left: 1px solid #ffe564;
+    height: 100%;
+  }
+  .MuiDataGrid-root .MuiDataGrid-columnHeader:focus, .MuiDataGrid-root .MuiDataGrid-cell:focus,
+  .MuiDataGrid-root .MuiDataGrid-cell:focus-within {
+    outline: none !important;
+  }
+  .nodata{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  margin: auto;
+  font-size: 25px;
+  padding: 50px;
+}
+.nodata .icon{
+    font-size: 80px;
+}
+.MuiDataGrid-root {
+  border-color: #F4F4F4 !important;
+  font-size: 0.95rem !important;
+  color:var(--bs-text-dark) !important;
+  .MuiDataGrid-columnHeaderTitle {
+    font-weight: 600 !important;
+    color: #a1a5b7;
+    font-size: 12.35px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+  }
+  .MuiDataGrid-cell{
+    font-size: 1rem !important;
+  }
+
+}
+.no_aside{
+  .header .header-brand {
+    background-color: #f6f6f6 !important;
+  }
+}
+
+.hide{
+  display: none !important;
+}
+.chart_body{
+  // padding: 0 2.25rem 0 0 !important;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chart_div{
+  width:450px;
+  height: 450px;
+}
+.form-label{
+  font-size: 1.085rem !important
+}
+
+.select__menu , .react-select-2-listbox {
+  color: black !important;
+  z-index: 9999;
+}
+.bg-warning {
+  background-color: var(--rs-yellow-500) !important;
+}
+
+// .last_dropdown .select__menu{
+//   position: sticky !important;
+// }
+
+
+body.react-confirm-alert-body-element {
+  overflow: hidden;
+  }
+  
+  .react-confirm-alert-blur {
+  -webkit-filter: blur(2px);
+  filter: blur(2px);
+  filter: url(#gaussian-blur);
+  }
+  
+  .react-confirm-alert-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  background: rgba(255, 255, 255, 0.2);
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  justify-content: center;
+  -ms-align-items: center;
+  align-items: center;
+  opacity: 0;
+  -webkit-animation: react-confirm-alert-fadeIn 0.5s 0.2s forwards;
+  -moz-animation: react-confirm-alert-fadeIn 0.5s 0.2s forwards;
+  -o-animation: react-confirm-alert-fadeIn 0.5s 0.2s forwards;
+  animation: react-confirm-alert-fadeIn 0.5s 0.2s forwards;
+  }
+  
+  .react-confirm-alert-body {
+    width: 32em;
+    max-width: 100%;
+    padding: 2.25em;
+    border: none;
+    border-radius: 5px;
+    background: var(--bs-body-bg);
+    font-family: inherit;
+    font-weight: normal;
+    font-size: 1.1rem;
+    margin-top: 1.5rem;
+    color: var(--bs-body-color);
+    text-align: center;
+    box-shadow: 0 20px 75px rgba(0, 0, 0, 0.13);
+  }
+  
+  .react-confirm-alert-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .react-confirm-alert-body .bi{
+    font-size: 20px;
+  }
+  .react-confirm-alert-body > h1 {
+    margin-top: 0;
+    font-size: 21px;
+    margin-bottom: 2rem;
+  }
+  
+  .react-confirm-alert-body > h3 {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .react-confirm-alert-button-group {
+    margin-top: 3rem;
+  }
+  
+  @-webkit-keyframes react-confirm-alert-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+  }
+  
+  @-moz-keyframes react-confirm-alert-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+  }
+  
+  @-o-keyframes react-confirm-alert-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+  }
+  
+  @keyframes react-confirm-alert-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+  }
+.text_extract{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cursor-not-allowed{
+  cursor: not-allowed
+}
+.disabled{
+  pointer-events: none;
+  opacity: 0.5;
+}
+.w-5{
+  width: 5%;
+}
+.w-90{
+  width: 90%;
+}
+
+.hover-border:hover,.package-selected {
+  border: 1px solid #e7e5e5;
+}
+
+.table.table-row-dashed {
+ td{
+    vertical-align: top !important;
+ }
+  .row-selected , .table_row:hover
+  {
+    background-color: #f0f8ff !important;
+  }
+  .table-header-border{
+    background-color: #efecec !important;
+    border: 1px solid black !important;
+  }
+  .table-header{
+    cursor: pointer;
+    font-size: 12px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.8px !important;
+    z-index: 0;
+  }
+  .table-header .fa{
+    color: var(--bs-white) !important;
+  }
+  .table-header:hover .fa{
+    color: var(--bs-gray) !important;
+  }
+  .table_row td{
+    padding: 0.5rem !important;
+    font-size: 1rem !important;
+    font-weight: 500;
+  }
+}
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding: 0;
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
+  border-top:1px dashed var(--bs-gray-300);
+  font-size: 12px;
+  font-weight: 500;
+  color: #000;
+  background-color: #fff;
+  z-index: 0;
+  .pagination{
+    align-items: center;
+  }
+}
+
+//.card{
+ // max-height: 500px !important;
+//}
+
+.tableFixHead { 
+  overflow-y: auto; 
+  height: 100%; 
+  padding: 0 1rem;
+}
+.tableFixHead thead th {
+   position: sticky; 
+   top: 0; 
+   z-index: 1; 
+   background:#fff !important;
+  }
+.tableFixHead tbody th { position: sticky; left: 0; }
+
+.table_row tr { padding: 0px 16px !important;}
+.table-responsive{
+  overflow: hidden;
+  height: 100%;
+}
+
+
+//loading indicator 
+.loader {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border-top: 2px solid steelblue;
+  border-bottom: 2px solid transparent;
+  border-left: 2px solid transparent;
+  border-right: 2px solid transparent;
+  position: relative;
+  animation: spin 3s linear infinite forwards;
+}
+
+.loader::before,
+.loader::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  border-top: 2px solid inherit;
+  border-bottom: 2px solid transparent;
+  border-left: 2px solid transparent;
+  border-right: 2px solid transparent;
+}
+
+.loader::before {
+  top: 7px;
+  left: 7px;
+  width: 178px;
+  height: 178px;
+  border-top: 2px solid tomato;
+  animation: spin 2s linear infinite forwards;
+}
+
+.loader::after {
+  top: 16px;
+  left: 16px;
+  width: 160px;
+  height: 160px;
+  border-top: 2px solid yellowgreen;
+  animation: spin 1s linear infinite forwards;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+//optiva
+.search-input{
+  border-radius: 20px;
+	height: 32px !important;
+}
+.breadcrumb.breadcrumb-separatorless{
+  background-color: transparent !important;
+}
+.commingSoon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fbfbfb;
+    height: 100%;
+    width: 100%;
+    padding: 5rem;
+
+}

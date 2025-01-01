@@ -1,0 +1,101 @@
+.react-tabs {
+    margin-left: -17px;
+    height: 100%;
+  }
+  
+  .react-tab-list{
+    display: flex;
+    flex-direction: column;
+    color: white;
+    padding: 0;
+    height: 100%;
+    background-color: #d2d6dd;
+    margin-bottom: 0;
+  }
+  
+  .react-tabs__tab {
+    height: 60px;
+    list-style: none;
+    padding: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    background-color: #e2e7ee;
+    border: 1px solid #efefef;
+    color: #212529;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .react-tabs__tab.selected{
+    background-color: #ffffff;
+    color: #276c69;
+    /* border-left: 2px solid #389e99; */
+    position: relative;
+    /* border-top: 2px solid #389e99; */
+    /* border-bottom: 2px solid #389e99; */
+  }
+  .arrow-right:after {
+    content: " ";
+    position: absolute;
+    right: -15px;
+    top: -1px;
+    border-top: 30px solid transparent;
+    border-right: none;
+    border-left: 15px solid #389e99;
+    border-bottom: 30px solid transparent;
+  }
+ .react-tab-panel{
+    padding: 1.5rem 3rem;
+ }
+  
+  .panel-content {
+    text-align: center;
+  }
+  .reports .content {
+    height: calc(100% - 60px);
+}
+.reports .MuiDataGrid-window{
+  overflow-y: auto;
+    height: calc(100% - 50px);
+    overflow-x: hidden;
+}
+
+
+
+
+/**
+ * Main wrapper
+ */
+ .select-search {
+  width: 100%;
+  position: relative;
+  font-family: "Nunito Sans", sans-serif;
+  box-sizing: border-box;
+}
+
+.select-search *,
+.select-search *::after,
+.select-search *::before {
+  box-sizing: inherit;
+}
+
+/**
+* Value wrapper
+*/
+.select-search__value {
+  position: relative;
+  z-index: 1;
+}
+
+.select-search__value::after {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  top: calc(50% - 9px);
+  right: 19px;
+  width: 11px;
+  height: 11px;
+}
+.table_content{
+  height: calc(100% - 0px);
+}

@@ -1,0 +1,59 @@
+.bg_img_green{
+    background-image:url('../../../../src/_metronic/assets/top-green.png');
+}
+.mb-n10{
+    margin-bottom: -8rem !important;
+}
+.pt-30{
+    padding-top:8rem !important;
+}
+.hm-370px{
+    max-height: 370px  !important;
+}
+.w-60{
+    width: 60%;
+}
+.w-40{
+    width: 40%;
+}
+.bg_orange_gradent{
+    background: linear-gradient(112.14deg, #FF8A00 0%, #E96922 100%)
+}
+.bg_pink_purple{
+    background: linear-gradient(132deg, var(--pink) 0%, #e56901 100%);
+}
+.bg_prple_dark{
+    // background: linear-gradient(112.14deg, var(--purple) 0%, var(--gray-dark) 100%);
+    background: linear-gradient(112.14deg, var(--rs-violet-400) 0%, var(--bs-info-text) 100%);
+    // background: linear-gradient(112.14deg, #3f51b5 0%, #009688 100%);
+    background: linear-gradient(112.14deg, #3f51b5 0%, #01665d 100%);
+}
+.h-125px{
+    height: 125px
+}
+.box_shadow1{
+    box-shadow: 1px 1px 3px 4px var(--rs-gray-200);
+}
+.border-dashed.onhover:hover{
+    border: 1px solid var(--bs-cyan) !important;
+}
+
+
+@media only screen and (min-width: 992px){
+    .fs-sm-2 {
+        font-size: 1.5rem !important;
+    }
+    .canReqImg{
+        height: 200px !important;
+    }
+}
+
+
+@media only screen and (min-width: 1539px){
+    .canReqImg{
+        height: 300px !important;
+    }
+    .fs-xl-1 {
+        font-size: calc(1.3rem + 0.6vw) !important;
+    }
+}

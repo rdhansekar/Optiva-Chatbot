@@ -1,0 +1,1421 @@
+<body>
+
+    <link rel="stylesheet" href="/Pages/chat2.css">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Courgette|Pacifico:400,700">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+    <!--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans" />-->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu&amp;subset=cyrillic,latin" rel="stylesheet"
+        type="text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--font awsome icons for crm 360-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+    <div class="chatbot chatbot--closed">
+        <div class="chatbot__header">
+            <i class="fa-solid fa-expand chatbot__close-button icon-maximize mr-3"></i>
+            <div class="d-flex align-items-center">
+                <img src="/Pages/optivaFav.jpeg" width="20" height="20" class="mr-2" />
+                <strong>Optiva MerakAI</strong>
+            </div>
+            <div class="d-flex align-items-center">
+                <i class="fa-solid fa-window-minimize chatbot__close-button icon-minimize mr-3"></i>
+                <i class="fa-solid fa-close chatbot__close-button icon-close mr-3"></i>
+            </div>
+
+        </div>
+        <div class="chatbot__message-window position-relative">
+            <div class="titleBar">
+                <div class="mb-3 h-12 w-12">
+                    <img src="/Pages/optivaFav.jpeg" width="30" height="30" />
+                </div>
+                <div class="mb-5">Want to Configure an Offer ?<span class="u-text-highlight"> Ask MerakAI</span></div>
+            </div>
+
+
+            <ul class="chatbot__messages">
+                <!--<li class="is-ai animation">
+                    <div class="is-ai__profile-picture">
+                        <i class="fa-solid fa-circle-user text-dark mt-3 fs-1"></i>
+                    </div>
+                    <span class="chatbot__arrow chatbot__arrow--left"></span>
+                    <p class='chatbot__message'>Hello, I am MerakAI , I am here to assist you today! 🙌 let’s start right away! 😃 </p>
+                </li>-->
+            </ul>
+            <div class="modal position-absolute" id="warningPopup" data-bs-backdrop="static">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close fw-bold closeWarning" data-bs-dismiss="modal"
+                                aria-label="Close">
+                                <i class="fa-solid fa-close fs-1"></i>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <span class="badge badge-secondary mb-4"><i
+                                    class="fa-solid fa-right-from-bracket fs-1 m-4"></i></span>
+                            <p class="text-center p-0 mt-3 mb-3 fs-3">Do you really want to leave current chat?</p>
+
+                            <button type="button" class="btn btn-danger close-session mt-3"
+                                data-bs-dismiss="modal">Close Chat</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-backdrop hide"></div>
+            <div id="default_buttons">
+                <h5 class="mb-4">How can I help you today? </h5>
+                <div class="defaultBtn">
+                    <button class="btn btn-light" onclick="defaultButtonClick(1)"><i
+                            class="fa-regular fa-handshake fs-4 text-dark mr-2"></i> Create a Partner Bundle </button>
+                    <button class="btn btn-light" onclick="defaultButtonClick(2)"><i
+                            class="fa-brands fa-digital-ocean fs-4 text-dark mr-2"></i> Analyze Churn </button>
+                    <button class="btn btn-light " onclick="defaultButtonClick(3)"><i
+                            class="fa-solid fa-viruses fs-4 text-dark mr-2"></i> Create Multiplay Bundle</button>
+                    <button class="btn btn-light" onclick="defaultButtonClick(4)"><i
+                            class="fa-regular fa-circle-question fs-4 text-dark mr-2"></i> Answer about Optiva</button>
+                </div>
+            </div>
+        </div>
+        <div class="chatbot__entry chatbot--closed">
+            <input type="text" class="chatbot__input" placeholder="Write a message..." />
+            <svg class="chatbot__submit" viewBox="0 0 32 32">
+                <use xlink:href="#icon-send" />
+            </svg>
+        </div>
+
+
+    </div>
+
+    <!-- Symbols -->
+    <svg>
+        <!-- Close icon -->
+        <symbol id="icon-close" viewBox="0 0 32 32">
+            <title>Close</title>
+            <path d="M2.624 8.297l2.963-2.963 23.704 23.704-2.963 2.963-23.704-23.704z" />
+            <path d="M2.624 29.037l23.704-23.704 2.963 2.963-23.704 23.704-2.963-2.963z" />
+        </symbol>
+
+        <!-- Speech icon -->
+        <symbol id="icon-speech" viewBox="0 0 32 32">
+            <title>Speech</title>
+            <path
+                d="M21.795 5.333h-11.413c-0.038 0-0.077 0-0.114 0l-0.134 0.011v2.796c0.143-0.006 0.273-0.009 0.385-0.009h11.277c0.070 0 7.074 0.213 7.074 7.695 0 5.179-2.956 7.695-9.036 7.695h-3.792c-0.691 0-1.12 0.526-1.38 1.159l-1.387 3.093-1.625 3.77 0.245 0.453h2.56l2.538-5.678h2.837c7.633 0 11.84-3.727 11.84-10.494 0.001-8.564-7.313-10.492-9.875-10.492z" />
+            <path
+                d="M10.912 24.259c-0.242-0.442-0.703-0.737-1.234-0.737-0 0-0 0-0 0h-0.56c-0.599-0.011-1.171-0.108-1.71-0.28l0.042 0.012c-1.82-0.559-4.427-2.26-4.427-7.424 0-6.683 5.024-7.597 7.109-7.686v-2.8c-2.042 0.095-9.91 1.067-9.91 10.483 0 4.832 1.961 7.367 3.606 8.64 1.38 1.067 3.109 1.744 4.991 1.843l0.033 0.019 2.805 5.211 1.41-3.273z" />
+        </symbol>
+
+        <!-- Send icon -->
+        <symbol id="icon-send" viewBox="0 0 23.97 21.9">
+            <title>Send</title>
+            <path d="M0.31,9.43a0.5,0.5,0,0,0,0,.93l8.3,3.23L23.15,0Z" />
+            <path d="M9,14.6H9V21.4a0.5,0.5,0,0,0,.93.25L13.22,16l6,3.32A0.5,0.5,0,0,0,20,19l4-18.4Z" />
+        </symbol>
+
+        <!-- Avatar icon -->
+        <symbol id="avatar" width="32" height="32" viewBox="0 0 44.25 44">
+            <title>Avatar</title>
+            <path style="fill: #38cafd; fill-rule: evenodd;"
+                d="M1035.88,1696.25a22,22,0,1,1-22.13,22A22.065,22.065,0,0,1,1035.88,1696.25Z"
+                transform="translate(-1013.75 -1696.25)" />
+            <path style="fill: #fff; fill-rule: evenodd;"
+                d="M1030.18,1725.16h2.35a0.335,0.335,0,0,0,.34-0.33v-5.23h5.94v5.23a0.342,0.342,0,0,0,.34.33h2.36a0.342,0.342,0,0,0,.34-0.33v-12.36a0.34,0.34,0,0,0-.34-0.32h-2.36a0.34,0.34,0,0,0-.34.32v4.51h-5.94v-4.51a0.333,0.333,0,0,0-.34-0.32h-2.35a0.333,0.333,0,0,0-.34.32v12.36a0.335,0.335,0,0,0,.34.33"
+                transform="translate(-1013.75 -1696.25)" />
+        </symbol>
+    </svg>
+
+
+    <!-- Modal -->
+
+</body>
+<script href="https://cdnjs.cloudflare.com/ajax/libs/fetch/0.10.1/fetch.min.js"></script>
+<script>
+
+    var baseUrl = '/api'
+    //const loader = `<span class='loader'><span class='loader__dot'></span><span class='loader__dot'></span><span class='loader__dot'></span></span>`
+    //const loader = `<div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><i class="fa-solid fa-robot"></i>`
+    const loader = `<div id="loading_indicator" class="d-flex align-items-center justify-content-space-between gap-2 position-relative"> <div class="lds-spinner1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><i class="fa-solid fa-robot"></i></div>`
+    const anazingLoder = `<div class="d-flex align-items-center justify-content-space-bwtween gap-2 position-relative"> <div class="lds-spinner1"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><i class="fa-solid fa-robot"></i><label class="fw-bold">Analysing...</label></div>`
+    // const loader = `<image src="http://localhost/chat.gif" width="80px"/>`
+    //const loader = '<div class="lds-default"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div><i class="fa-solid fa-gear fa-spin" ></i>'
+    const errorMessage = 'My apologies, I\'m not avail at the moment, however, feel free to call our support team directly 0123456789.'
+    const urlPattern = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim
+    const $document = document
+    const $chatbot = $document.querySelector('.chatbot')
+    const $chatbotMessageWindow = $document.querySelector('.chatbot__message-window');
+    const $chatbotHeader = $document.querySelector('.chatbot__header')
+    const $chatClose = $chatbotHeader.querySelector('.icon-close');
+    const $chatSessionClose = $document.querySelector('.close-session');
+    const $chatMaximize = $chatbotHeader.querySelector('.icon-maximize')
+    const $chatMinimize = $chatbotHeader.querySelector('.icon-minimize')
+    const $chatbotMessages = $document.querySelector('.chatbot__messages')
+    const $chatbotInput = $document.querySelector('.chatbot__input')
+    const $chatbotSubmit = $document.querySelector('.chatbot__submit');
+    const $modalBackdrop = $document.querySelector('.modal-backdrop');
+    const $closeWarning = $document.querySelector('.closeWarning');
+    const botLoadingDelay = 0
+    const botReplyDelay = 0
+    var takingOrder = false;
+    var takingOrderUserSpecific = false;
+    var CaseType = 0;
+    getId = function () {
+        let rand = Math.floor(Math.random() * 26) + Date.now();
+        return rand++;
+    };
+    var sessionId = getId();
+    console.log(sessionId)
+
+
+    $chatbotHeader.addEventListener('click', () => {
+        $chatbot.classList.remove('chatbot--closed');
+        $chatbotInput.focus();
+    }, false)
+    $chatClose.addEventListener('click', (e) => {
+        try {
+            sessionId = getId();
+            $modalBackdrop.classList.add('show');
+            $modalBackdrop.classList.remove('hide');
+            $("#warningPopup").modal('show');
+            $("#warningPopup").scrollIntoView();
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+        } catch (e) {
+
+        }
+    }, false)
+    $chatSessionClose.addEventListener('click', (e) => {
+        $modalBackdrop.classList.add('hide');
+        $modalBackdrop.classList.remove('show');
+        $("#warningPopup").modal('hide');
+        $chatbot.classList.remove('maximize');
+        $chatbot.classList.add('chatbot--closed');
+        $chatbotMessages.innerHTML = '';
+        $("#default_buttons").show();
+        $(".titleBar").show();
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        //$chatbotinput.focus();
+    })
+    $closeWarning.addEventListener('click', (e) => {
+        $modalBackdrop.classList.add('hide');
+        $modalBackdrop.classList.remove('show');
+    });
+    $chatMinimize.addEventListener('click', (e) => {
+        $chatbot.classList.remove('maximize');
+        $chatbot.classList.add('chatbot--closed');
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+    }, false)
+
+    $chatMaximize.addEventListener('click', () => {
+        toggle($chatbot, 'maximize');
+        toggle($chatMaximize, 'fa-compress');
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+    }, false)
+
+    $chatbotSubmit.addEventListener('click', () => {
+        validateMessage()
+    }, false)
+
+    const toggle = (element, klass) => {
+        const classes = element.className.match(/\S+/g) || [],
+            index = classes.indexOf(klass)
+        index >= 0 ? classes.splice(index, 1) : classes.push(klass)
+        element.className = classes.join(' ')
+    }
+
+    const userMessage = content => {
+        $chatbotMessages.innerHTML += `<li class='is-user animation'>
+         <div class="w-full text-token-text-primary">
+            <div class="d-flex align-items-center gap-1">
+            <div class="bg-warning font-weight-bold text-white px-3 py-2 rounded-circle mr-2">
+                U
+            </div>
+            <div class="user_name">User</div>
+        </div>
+        <div class='chatbot__message'>
+        ${content}
+        </div>
+        </div>
+    </li>`
+    }
+
+    const aiMessage = (content, isLoading = false, delay = 0) => {
+        $document.querySelector(".latest_msg_div")?.classList.remove('latest_msg_div');
+        if (isLoading) {
+            $chatbotMessages.innerHTML += `<li class='is-ai animation' id='${isLoading ? "is-loading" : ""}'>
+                                                <div class="w-full text-token-text-primary">
+                                                        <div class="d-flex align-items-center gap-1">
+                                                            <div  class="mr-2">
+                                                                <img src="/Pages/optivaFav.jpeg"  width="32" height="32" />
+                                                            </div>
+                                                            <div class="user_name">Optiva MerakAI</div>
+                                                        </div>
+                                                        <div class='chatbot__message latest_msg_div'>
+                                                               ${isLoading ? content : ""}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                             </li>`;
+        }
+        else if (content) {
+            setTimeout(() => {
+                removeLoader();
+                $chatbotMessages.innerHTML += `<li class='is-ai animation' id='${isLoading ? "is-loading" : ""}'>
+                                                <div class="w-full text-token-text-primary">
+                                                        <div class="d-flex align-items-center gap-1">
+                                                            <div  class="mr-2">
+                                                                <img src="/Pages/optivaFav.jpeg"  width="32" height="32" />
+                                                            </div>
+                                                            <div class="user_name">Optiva MerakAI</div>
+                                                        </div>
+                                                        <div class='chatbot__message latest_msg_div'>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                             </li>`;
+                var btnStart = content.indexOf('##btnstart##');
+                var btnEnd = content.indexOf('##btnend##') - 12;
+                content = content.replace("##btnstart##","").replace("##btnend##","");
+                showTypeWriteEffect(content, 0, btnStart, btnEnd)
+            }, delay)
+        }
+    }
+
+    function showTypeWriteEffect(content, contentPoint, btnStart, btnEnd) {
+        if (content.indexOf("button") != -1 && btnStart == -1) {
+            contentPoint = content.length - 1;
+        }
+        if(contentPoint == btnStart){
+            contentPoint = btnEnd;
+        }
+        $document.querySelector(".latest_msg_div").innerHTML = content.substring(0, contentPoint);
+        contentPoint++;
+        if (content.length > contentPoint) {
+            setTimeout(() => { showTypeWriteEffect(content, contentPoint,btnStart, btnEnd) }, 10);
+        }
+        else {
+            scrollDown()
+        }
+    }
+
+    const removeLoader = () => {
+        let loadingElem = document.getElementById('is-loading');
+        if (loadingElem) $chatbotMessages.removeChild(loadingElem);
+    }
+
+    const escapeScript = unsafe => {
+        const safeString = unsafe
+            .replace(/</g, ' ')
+            .replace(/>/g, ' ')
+            .replace(/&/g, ' ')
+            .replace(/"/g, ' ')
+            .replace(/\\/, ' ')
+            .replace(/\s+/g, ' ')
+        return safeString.trim()
+    }
+
+    const linkify = inputText => {
+        return inputText.replace(urlPattern, `<a href='$1' target='_blank'>$1</a>`)
+    }
+
+    const validateMessage = () => {
+        if ($("#default_buttons")[0].outerHTML) {
+            defaultBtnHTML = $("#default_buttons")[0].outerHTML;
+            $("#default_buttons").hide();
+        }
+        $(".titleBar").hide();
+        const text = $chatbotInput.value
+        const safeText = text ? escapeScript(text) : ''
+        if (safeText.length && safeText !== ' ') {
+            {
+                resetInputField()
+                userMessage(safeText)
+                var json = {
+                    Message: safeText,
+                    Type: 'Plain',
+                    Id: sessionId
+                }
+                send(json)
+            }
+        }
+        scrollDown()
+        return
+    }
+
+    const ContinueWithTakeOrder = (text) => {
+
+    }
+
+
+    const setResponse = (val, delay = 0) => {
+        aiMessage(processResponse(val), false, botReplyDelay)
+    }
+
+    const resetInputField = () => {
+        $chatbotInput.value = ''
+    }
+
+    const scrollDown = () => {
+        const distanceToScroll =
+            $chatbotMessageWindow.scrollHeight -
+            ($chatbotMessages.lastChild.offsetHeight + 60)
+        $chatbotMessageWindow.scrollTop = distanceToScroll
+        return false
+    }
+
+    const send = (json, showLoader = true) => {
+        if (showLoader) {
+            aiMessage(loader, true, botLoadingDelay)
+        }
+        $.ajax({
+            type: "POST",
+            url: baseUrl + "/chatbot",
+            data: JSON.stringify(json),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: true,
+            success: function (msg) {
+                console.log(msg)
+                if (msg.isSucess) {
+                    setResponse(JSON.parse(msg.data), botLoadingDelay + botReplyDelay)
+                }
+                else {
+                    setResponse(msg.message, botLoadingDelay + botReplyDelay)
+                    resetInputField()
+                }
+            },
+            error: function (msg) {
+                console.log(msg)
+                //setResponse(errorMessage, botLoadingDelay + botReplyDelay)
+                resetInputField()
+            },
+            complete: function (msg) {
+                resetInputField()
+                console.log(msg)
+            }
+        });
+    }
+
+    var OrderDetails = {
+        "Plan Name": "GigSaver",
+        "Data": "Unlimited 5G data",
+        "Price": " $50 per month with a 24-month contract",
+        "Validity": "30 Days",
+        "International Roaming": "Included in the EU, UK, Singapore, India and USA",
+        "Digital Services": "Spotify Premium subscription, Prime Video",
+        "SMS": "200 per day",
+        "Voice Calls": "Unlimited national",
+        "Early Termination Fee": "$200",
+        "Upgrade/Downgrade Options": "Option to upgrade to the latest iPhone model after 12 months",
+        "Device": "iPhone 14 Pro (128 GB)"
+    }
+
+    function CreateProductData() {
+        document.getElementById('loading_indicator').remove()
+        let ordernameid = OrderDetails["Plan Name"].toLowerCase().replace(/ /g,"_");
+        let planName = OrderDetails["Plan Name"];
+        let productOrder = {};
+        switch (CaseType) {
+            case 1:
+                productOrder = {
+                    id:"",
+                    "version": "1",
+                    "lifecycleStatus": "Active",
+                    "isSellable": true,
+                    "isBundle": false,
+                    "name":  planName,
+                    "description": OrderDetails["Product Description"],
+                    "category": [
+                        {
+                            "id": "deals_and_discounts",
+                            "name": "Deals and Discounts"
+                        }
+                    ],
+                    "channel": [
+                        {
+                            "id": "saleschannel_online",
+                            "name": "Online"
+                        }
+                    ],
+                    "prodSpecCharValueUse": [
+                        {
+                            "id": "ph_49eih",
+                            "name": "Early Termination Fee",
+                            "type": "ProductSpecification",
+                            "maxCardinality": 1,
+                            "minCardinality": 0,
+                            "valueType": "String",
+                            "validFor": {
+                                "endDateTime": "2098-12-31T18:30:00.000Z",
+                                "startDateTime": "2023-08-23T10:51:41.476Z"
+                            },
+                            "productSpecification": {
+                                "id": ordernameid + "_product_specification_001",
+                                "name": planName+" - Product Specification",
+                                "version": "1"
+                            },
+                            "productSpecCharacteristicValue": [
+                                {
+                                    "isDefault": true,
+                                    "value":  OrderDetails["Early Termination Fee"],
+                                    "valueType": "String",
+                                    "validFor": {
+                                        "endDateTime": "2098-12-31T18:30:00.000Z",
+                                        "startDateTime": "2023-08-23T10:51:41.476Z"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "id": "sh_uixga",
+                            "name": "Upgrade/Downgrade Options",
+                            "type": "ProductSpecification",
+                            "maxCardinality": 1,
+                            "minCardinality": 0,
+                            "valueType": "List",
+                            "validFor": {
+                                "endDateTime": "2098-12-31T18:30:00.000Z",
+                                "startDateTime": "2023-08-23T10:51:41.477Z"
+                            },
+                            "productSpecification": {
+                                "id": ordernameid +"_product_specification_001",
+                                "name": planName+" - Product Specification",
+                                "version": "1"
+                            },
+                            "productSpecCharacteristicValue": [
+                                {
+                                    "isDefault": true,
+                                    "unitOfMeasure": "Membership",
+                                    "value": OrderDetails["Upgrade/Downgrade Options"],
+                                    "valueType": "String"
+                                },
+                                {
+                                    "isDefault": true,
+                                    "unitOfMeasure": "Membership",
+                                    "value": OrderDetails["Upgrade/Downgrade Options"],
+                                    "valueType": "String"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "sh_6msg4",
+                            "name": "Customer Eligibility Criteria",
+                            "type": "ProductSpecification",
+                            "maxCardinality": 1,
+                            "minCardinality": 0,
+                            "valueType": "List",
+                            "validFor": {
+                                "endDateTime": "2098-12-31T18:30:00.000Z",
+                                "startDateTime": "2023-08-23T10:51:41.477Z"
+                            },
+                            "productSpecification": {
+                                "id": ordernameid +"_product_specification_001",
+                                "name": "Deal Dazzler - Product Specification",
+                                "version": "1"
+                            },
+                            "productSpecCharacteristicValue": [
+                                {
+                                    "isDefault": true,
+                                    "value": OrderDetails["Customer Eligibility Criteria"],
+                                    "valueType": "String"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "sh_m5z7r",
+                            "name": "Special Offers or Discounts",
+                            "type": "ProductSpecification",
+                            "maxCardinality": 1,
+                            "minCardinality": 0,
+                            "valueType": "List",
+                            "validFor": {
+                                "endDateTime": "2098-12-31T18:30:00.000Z",
+                                "startDateTime": "2023-08-23T10:51:41.477Z"
+                            },
+                            "productSpecification": {
+                                "id": ordernameid +"_product_specification_001",
+                                "name": "Deal Dazzler - Product Specification",
+                                "version": "1"
+                            },
+                            "productSpecCharacteristicValue": [
+                                {
+                                    "isDefault": true,
+                                    "value": OrderDetails["Special Offers or Discounts"],
+                                    "valueType": "String",
+                                    "validFor": {
+                                        "endDateTime": "2098-12-31T18:30:00.000Z",
+                                        "startDateTime": "2023-08-23T10:51:41.477Z"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "productOfferingPrice": [
+                        {
+                            "id": ordernameid +"_monthly_rc",
+                            "name": ordernameid +"_monthly_rc",
+                            "priceType": "recurring",
+                            "recurringChargePeriod": "Month",
+                            "price": {
+                                "taxCategory": "GST",
+                                "taxRate": 0.00,
+                                "dutyFreeAmount": {
+                                    "unit": "USD",
+                                    "value": 5.00
+                                },
+                                "taxIncludedAmount": {
+                                    "unit": "USD",
+                                    "value": 5.00
+                                }
+                            },
+                            "priceAlteration": [
+                                {
+                                    "id": ordernameid +"_first_month_discount",
+                                    "name": ordernameid +"_first_month_discount",
+                                    "priceType": "discount",
+                                    "recurringChargePeriod": "Month",
+                                    "applicationDuration": {
+                                        "amount": 1,
+                                        "units": "Month"
+                                    },
+                                    "price": {
+                                        "percentage": 100,
+                                        "taxCategory": "GST",
+                                        "taxRate": 0,
+                                        "dutyFreeAmount": {
+                                            "unit": "USD",
+                                            "value": OrderDetails["Price"]
+                                        },
+                                        "taxIncludedAmount": {
+                                            "unit": "USD",
+                                            "value": OrderDetails["Price"]
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "id": ordernameid +"_yearly_rc",
+                            "name": ordernameid +"_yearly_rc",
+                            "priceType": "recurring",
+                            "recurringChargePeriod": "Year",
+                            "price": {
+                                "taxCategory": "GST",
+                                "taxRate": 0.00,
+                                "dutyFreeAmount": {
+                                    "unit": "USD",
+                                    "value": OrderDetails["Price"]
+                                },
+                                "taxIncludedAmount": {
+                                    "unit": "USD",
+                                    "value": OrderDetails["Price"]
+                                }
+                            },
+                            "priceAlteration": [
+                                {
+                                    "id": ordernameid +"_first_month_discount",
+                                    "name": ordernameid +"_first_month_discount",
+                                    "priceType": "discount",
+                                    "recurringChargePeriod": "Month",
+                                    "applicationDuration": {
+                                        "amount": 1,
+                                        "units": "Month"
+                                    },
+                                    "price": {
+                                        "percentage": 100,
+                                        "taxCategory": "GST",
+                                        "taxRate": 0,
+                                        "dutyFreeAmount": {
+                                            "unit": "USD",
+                                            "value": OrderDetails["Price"]
+                                        },
+                                        "taxIncludedAmount": {
+                                            "unit": "USD",
+                                            "value": OrderDetails["Price"]
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "productSpecification": {
+                        "id": ordernameid +"_product_specification_001",
+                        "name": planName + " - Product Specification",
+                        "version": "1"
+                    },
+                    "validFor": {
+                        "endDateTime": "2098-12-31T18:30:00.000Z",
+                        "startDateTime": "2023-09-28T05:14:51.383Z"
+                    },
+                    "lastUpdate":new Date(),
+                    "createdOn": new Date(),
+                    "@type": "ProductOffering",
+                    "@baseType": "ProductOffering"
+                }
+                break;
+            case 2:
+                productOrder = {
+                    id:"",
+                    "version": "1",
+                    "lifecycleStatus": "Active",
+                    "isSellable": true,
+                    "isBundle": true,
+                    "name": planName,
+                    "description": "Device Bundle with " + OrderDetails["Digital Service"],
+                    "bundledProductOffering": [
+                        {
+                            "id": "ytl_postpaid_primary_line_001",
+                            "name": "Postpaid Primary Line",
+                            "version": "1",
+                            "lifecycleStatus": "Active"
+                        },
+                        {
+                            "id": "ytl_tcl_l7_001",
+                            "name": "TCL L7",
+                            "version": "1",
+                            "lifecycleStatus": "Active"
+                        },
+                        {
+                            "id": "ytl_digital_service_disney_001",
+                            "name": OrderDetails["Digital Service"],
+                            "version": "1",
+                            "lifecycleStatus": "Active"
+                        },
+                        {
+                            "id": "ytl_amazon_music_addon_001",
+                            "name": OrderDetails["Add On"],
+                            "version": "1",
+                            "lifecycleStatus": "Active"
+                        }
+                    ],
+                    "category": [
+                        {
+                            "id": "digital_service_plans",
+                            "name": "Digital Service Plans"
+                        },
+                        {
+                            "id": "ott_addon",
+                            "name": "OTT Addon"
+                        }
+                    ],
+                    "channel": [
+                        {
+                            "id": "saleschannel_online",
+                            "name": "Online"
+                        }
+                    ],
+                    "prodSpecCharValueUse": [
+                        {
+                            "id": "sh_uixga",
+                            "name": "Data Allowance",
+                            "type": "ProductSpecification",
+                            "maxCardinality": 1,
+                            "minCardinality": 0,
+                            "valueType": "List",
+                            "validFor": {
+                                "endDateTime": "2023-08-28T18:30:00.000Z",
+                                "startDateTime": "2023-08-01T10:51:41.477Z"
+                            },
+                            "productSpecification": {
+                                "id": ordernameid +"_bundle_product_specification_001",
+                                "name": planName + " - Product Specification",
+                                "version": "1"
+                            },
+                            "productSpecCharacteristicValue": [
+                                {
+                                    "isDefault": true,
+                                    "unitOfMeasure": "GB",
+                                    "value": "45",
+                                    "valueType": "String"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "sh_m5z7r",
+                            "name": "International Roaming",
+                            "type": "ProductSpecification",
+                            "maxCardinality": 1,
+                            "minCardinality": 0,
+                            "valueType": "List",
+                            "validFor": {
+                                "endDateTime": "2098-12-31T18:30:00.000Z",
+                                "startDateTime": "2023-08-23T10:51:41.477Z"
+                            },
+                            "productSpecification": {
+                                "id": ordernameid +"_bundle_product_specification_001",
+                                "name": "Mobile Device Bundle - Product Specification",
+                                "version": "1"
+                            },
+                            "productSpecCharacteristicValue": [
+                                {
+                                    "isDefault": true,
+                                    "unitOfMeasure": "Region",
+                                    "value": "UK",
+                                    "valueType": "String",
+                                    "validFor": {
+                                        "endDateTime": "2098-12-31T18:30:00.000Z",
+                                        "startDateTime": "2023-08-23T10:51:41.477Z"
+                                    }
+                                },
+                                {
+                                    "isDefault": true,
+                                    "unitOfMeasure": "Region",
+                                    "value": "EU",
+                                    "valueType": "String",
+                                    "validFor": {
+                                        "endDateTime": "2098-12-31T18:30:00.000Z",
+                                        "startDateTime": "2023-08-23T10:51:41.477Z"
+                                    }
+                                },
+                                {
+                                    "isDefault": true,
+                                    "unitOfMeasure": "Region",
+                                    "value": "USA",
+                                    "valueType": "String",
+                                    "validFor": {
+                                        "endDateTime": "2098-12-31T18:30:00.000Z",
+                                        "startDateTime": "2023-08-23T10:51:41.477Z"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "id": "sh_m6dae",
+                            "name": "Voice Allowance",
+                            "type": "ProductSpecification",
+                            "maxCardinality": 1,
+                            "minCardinality": 0,
+                            "valueType": "List",
+                            "validFor": {
+                                "endDateTime": "2098-12-31T18:30:00.000Z",
+                                "startDateTime": "2023-08-23T10:51:41.477Z"
+                            },
+                            "productSpecification": {
+                                "id": ordernameid +"_bundle_product_specification_001",
+                                "name": planName + " - Product Specification",
+                                "version": "1"
+                            },
+                            "productSpecCharacteristicValue": [
+                                {
+                                    "isDefault": true,
+                                    "unitOfMeasure": "Minutes",
+                                    "value": "Unlimited",
+                                    "valueType": "String"
+                                }
+                            ]
+                        }
+                    ],
+                    "productOfferingPrice": [
+                        {
+                            "id": ordernameid +"_bundle_rc",
+                            "name": ordernameid +"_bundle_rc",
+                            "priceType": "recurring",
+                            "recurringChargePeriod": "Month",
+                            "price": {
+                                "taxCategory": "GST",
+                                "taxRate": 10,
+                                "dutyFreeAmount": {
+                                    "unit": "EUR",
+                                    "value": OrderDetails["Price"]
+                                },
+                                "taxIncludedAmount": {
+                                    "unit": "EUR",
+                                    "value": OrderDetails["Price"]
+                                }
+                            }
+                        }
+                    ],
+                    "productSpecification": {
+                        "id": ordernameid +"_bundle_product_specification_001",
+                        "name": planName + " - Product Specification",
+                        "version": "1"
+                    },
+                    "validFor": {
+                        "endDateTime": "2098-12-31T18:30:00.000Z",
+                        "startDateTime": "2023-09-28T05:14:51.383Z"
+                    },
+                    "lastUpdate": "2024-01-08T10:58:27.602Z",
+                    "createdOn": "2023-09-28T05:14:51.383Z",
+                    "@type": "ProductOffering",
+                    "@baseType": "ProductOffering"
+                }
+                break;
+            case 3:
+                productOrder = {
+                    "id":"",
+                    "version": "1",
+                    "lifecycleStatus": "Active",
+                    "isSellable": true,
+                    "isBundle": false,
+                    "name": planName,
+                    "description": planName + " - " + OrderDetails["Data"]+", " + OrderDetails["voice"] +", " + OrderDetails["Broadband"] + ", "+ OrderDetails["IPTV"],
+                    "category": [
+                        {
+                            "id": ordernameid,
+                            "name": planName
+                        }
+                    ],
+                    "channel": [
+                        {
+                            "id": "saleschannel_online",
+                            "name": "Online"
+                        }
+                    ],
+                    "prodSpecCharValueUse": [
+                        {
+                            "id": "ph_49eih",
+                            "name": "Product Type",
+                            "type": "ProductSpecification",
+                            "maxCardinality": 1,
+                            "minCardinality": 0,
+                            "valueType": "List",
+                            "validFor": {
+                                "endDateTime": "2098-12-31T18:30:00.000Z",
+                                "startDateTime": "2023-08-23T10:51:41.476Z"
+                            },
+                            "productSpecificaiton": {
+                                "id": ordernameid +"_product_specification_001",
+                                "name": planName+" - Product Specification",
+                                "version": "1"
+                            },
+                            "productSpecCharacteristicValue": [
+                                {
+                                    "isDefault": true,
+                                    "value": "Plan",
+                                    "valueType": "String",
+                                    "validFor": {
+                                        "endDateTime": "2098-12-31T18:30:00.000Z",
+                                        "startDateTime": "2023-08-23T10:51:41.476Z"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "id": "sh_uixga",
+                            "name": "Data Allowance",
+                            "type": "ServiceSpecification",
+                            "maxCardinality": 1,
+                            "minCardinality": 0,
+                            "valueType": "List",
+                            "validFor": {
+                                "endDateTime": "2098-12-31T18:30:00.000Z",
+                                "startDateTime": "2023-08-23T10:51:41.477Z"
+                            },
+                            "productSpecificaiton": {
+                                "id": "data_service_specification_001",
+                                "name": "Data - Service Specification",
+                                "version": "1"
+                            },
+                            "productSpecCharacteristicValue": [
+                                {
+                                    "isDefault": true,
+                                    "unitOfMeasure": "GB",
+                                    "value":OrderDetails["Data"],
+                                    "valueType": "String"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "sh_6msg4",
+                            "name": "Broadband Allowance",
+                            "type": "ServiceSpecification",
+                            "maxCardinality": 1,
+                            "minCardinality": 0,
+                            "valueType": "List",
+                            "validFor": {
+                                "endDateTime": "2098-12-31T18:30:00.000Z",
+                                "startDateTime": "2023-08-23T10:51:41.477Z"
+                            },
+                            "productSpecificaiton": {
+                                "id": "broadband_service_specification_001",
+                                "name": "Broadband - Service Specification",
+                                "version": "1"
+                            },
+                            "productSpecCharacteristicValue": [
+                                {
+                                    "isDefault": true,
+                                    "unitOfMeasure": "MBPS",
+                                    "value": "100",
+                                    "valueType": "String"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "sh_m5z7r",
+                            "name": "IPTV Allowance",
+                            "type": "ServiceSpecification",
+                            "maxCardinality": 1,
+                            "minCardinality": 0,
+                            "valueType": "List",
+                            "validFor": {
+                                "endDateTime": "2098-12-31T18:30:00.000Z",
+                                "startDateTime": "2023-08-23T10:51:41.477Z"
+                            },
+                            "productSpecificaiton": {
+                                "id": "iptv_service_specification_001",
+                                "name": "IPTV  - Service Specification",
+                                "version": "1"
+                            },
+                            "productSpecCharacteristicValue": [
+                                {
+                                    "isDefault": true,
+                                    "unitOfMeasure": "Channels",
+                                    "value": "200",
+                                    "valueType": "String",
+                                    "validFor": {
+                                        "endDateTime": "2098-12-31T18:30:00.000Z",
+                                        "startDateTime": "2023-08-23T10:51:41.477Z"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "id": "sh_m6dae",
+                            "name": "Voice Allowance",
+                            "type": "ServiceSpecification",
+                            "maxCardinality": 1,
+                            "minCardinality": 0,
+                            "valueType": "List",
+                            "validFor": {
+                                "endDateTime": "2098-12-31T18:30:00.000Z",
+                                "startDateTime": "2023-08-23T10:51:41.477Z"
+                            },
+                            "productSpecificaiton": {
+                                "id": "voice_service_specification_001",
+                                "name": "Voice  - Service Specification",
+                                "version": "1"
+                            },
+                            "productSpecCharacteristicValue": [
+                                {
+                                    "isDefault": true,
+                                    "unitOfMeasure": "Minutes",
+                                    "value": "Unlimited",
+                                    "valueType": "String"
+                                }
+                            ]
+                        }
+                    ],
+                    "productOfferingPrice": [
+                        {
+                            "id": ordernameid +"_24_months_rc",
+                            "name": ordernameid +"_24_months_rc",
+                            "priceType": "recurring",
+                            "recurringChargePeriod": "Month",
+                            "recurringChargePeriodLength": 24,
+                            "price": {
+                                "taxCategory": "GST",
+                                "taxRate": 10,
+                                "dutyFreeAmount": {
+                                    "unit": "USD",
+                                    "value": OrderDetails["Price"]
+                                },
+                                "taxIncludedAmount": {
+                                    "unit": "USD",
+                                    "value":OrderDetails["Price"]
+                                }
+                            },
+                            "priceAlteration": [
+                                {
+                                    "id": ordernameid +"_24_months_rc_discount",
+                                    "name": ordernameid +"_24_months_rc_discount",
+                                    "priceType": "discount",
+                                    "recurringChargePeriod": "Month",
+                                    "applicationDuration": {
+                                        "amount": 24,
+                                        "units": "Month"
+                                    },
+                                    "price": {
+                                        "percentage": 15,
+                                        "taxCategory": "GST",
+                                        "taxRate": 10,
+                                        "dutyFreeAmount": {
+                                            "unit": "USD",
+                                            "value": OrderDetails["Price"]
+                                        },
+                                        "taxIncludedAmount": {
+                                            "unit": "USD",
+                                            "value": OrderDetails["Price"]
+                                        },
+                                        "@baseType": "string",
+                                        "@schemaLocation": "string",
+                                        "@type": "string"
+                                    }
+                                }
+                            ]
+                        }
+                    ],
+                    "productOfferingTerm": [
+                        {
+                            "duration": {
+                                "amount": OrderDetails["Price"],
+                                "units": "Month"
+                            }
+                        }
+                    ],
+                    "productSpecification": {
+                        "id": ordernameid +"_product_specification_001",
+                        "name": "Smart Living - Product Specification",
+                        "version": "1",
+                        "serviceSpecification": [
+                            {
+                                "id": "voice_service_specification_001",
+                                "name": "Voice  - Service Specification",
+                                "version": "1"
+                            },
+                            {
+                                "id": "data_service_specification_001",
+                                "name": "Data - Service Specification",
+                                "version": "1"
+                            },
+                            {
+                                "id": "broadband_service_specification_001",
+                                "name": "Broadband - Service Specification",
+                                "version": "1"
+                            },
+                            {
+                                "id": "iptv_service_specification_001",
+                                "name": "IPTV - Service Specification",
+                                "version": "1"
+                            }
+                        ]
+                    },
+                    "validFor": {
+                        "endDateTime": "2098-12-31T18:30:00.000Z",
+                        "startDateTime": "2023-09-28T05:14:51.383Z"
+                    },
+                    "lastUpdate": "2024-01-08T10:58:27.602Z",
+                    "createdOn": "2023-09-28T05:14:51.383Z",
+                    "@type": "ProductOffering",
+                    "@baseType": "ProductOffering"
+                }
+                break;
+        }
+        var json = {
+            Message: OrderDetails["Plan Name"],
+            Type: 'createproduct',
+            Id: sessionId,
+            Attribute: (productOrder)
+        };
+        send(json);
+    }
+
+    const processResponse = val => {
+        if (val && val.Type) {
+            if (val.CaseType) {
+                CaseType = val.CaseType;
+            }
+            let output = ''
+            let type = val.Type
+            let message = val.Message;
+            if (val.Type == "mainmenu") {
+                takingOrder = false;
+                mainMenu = $("#default_buttons")[0].innerHTML;
+                return `<div class="mainMenu">${mainMenu}</div>`;
+            }
+            if (takingOrder && type.toLowerCase() != 'takeorder-user' && val.Attributes) {
+                parsedText = linkify(message)
+                output += parsedText ? `<p>${parsedText}</p>` : "";
+                switch (val.Attributes.orderPos) {
+                    case 2:
+                        OrderDetails["Plan Name"] = val.Attributes.inputValue
+                        break;
+                    case 3: case 6:
+                        if (val.Attributes.questionTag && val.Attributes.value) {
+                            OrderDetails[val.Attributes.questionTag] = val.Attributes.value;
+                        }
+                        if (OrderDetails["Plan Name"]) {
+                            output += `<p>Plan Name : ${OrderDetails["Plan Name"]}</p>`
+                        }
+                        if (OrderDetails["Price"] && OrderDetails["Voice Minutes"]) {
+                            output += `<p>Price : ${OrderDetails["Price"]}</p>`
+                            output += `<p>Voice Minutes : ${OrderDetails["Voice Minutes"]}</p>`
+                            output += `<p>Data Limit : ${OrderDetails["Data Limit"]}</p>`
+                        }
+                        output += `<br/><p>Here is the summary of the partner bundled product</p>`
+                        for (var key in OrderDetails) {
+                            if (key != "Further Inputs") {
+                                output += `<p>${key} : ${OrderDetails[key]}</p>`
+                            }
+                        }
+                        output += `<p>Creating product...</p>` + loader
+                        setTimeout(() => {
+                            CreateProductData();
+                        }, 15000);
+                        return output;
+                        takingOrder = false;
+                        break;
+                }
+            }
+            else {
+                let parsedText = linkify(message)
+                switch (type.toLowerCase()) {
+                    case "loading_message":
+                        removeLoader();
+                        aiMessage(`<p>${parsedText}</p>` + anazingLoder, true, botLoadingDelay)
+                        setTimeout(() => {
+                            var data = JSON.parse(val.APICallData);
+                            data.Id = sessionId;
+                            send((data), false);
+                        }, 1500);
+                        break;
+                    case "downloadcsv":
+                        let anchor = document.createElement('a');
+                        anchor.href = 'data:text/csv;charset=utf-8,' + encodeURI(val.Message);
+                        anchor.click();
+                        output += "<p>File expoted successfully. Is there anything else you want to help with ?</p>";
+                        break;
+                    // 0 fulfillment is text
+                    case "plain_message":
+                        if (val.ShowAnalyzing) {
+                            removeLoader();
+                            var prepend = "";
+                            if (val.LoadingMessage) {
+                                prepend = `<p>${val.LoadingMessage}</p>`
+                            }
+                            aiMessage(prepend + anazingLoder, true, botLoadingDelay)
+                            setTimeout(() => {
+                                aiMessage(`<p>${parsedText}</p>`, false, 1000)
+                            }, 3000);
+                        }
+                        else {
+                            output += `<p>${parsedText}</p>`
+                        }
+                        if (val.OrderDetails) {
+                            OrderDetails = val.OrderDetails
+                        }
+                        if (val.Buttons && val.Buttons.length > 0) {
+                            var btns = ''
+                            for (var i = 0; i < val.Buttons.length; i++) {
+                                let encodedText = btoa(JSON.stringify(val.Buttons[i]))
+                                btns += `<button class="btn btn-light" onclick='multiChoiceAnswer("${encodedText}")'>${val.Buttons[i].Label}</button>`
+                            }
+                            output += `##btnstart##<div class="defaultBtn">${btns}</div>##btnend##`
+                        }
+                        break
+                    // 1 fulfillment is card
+                    case "json":
+                        if (val.ShowAnalyzing) {
+                            removeLoader();
+                            var prepend = "";
+                            if (val.LoadingMessage) {
+                                prepend = `<p>${val.LoadingMessage}</p>`
+                            }
+                            aiMessage(prepend + anazingLoder, true, botLoadingDelay)
+                        }
+                        var analysisData = parsedText ? `<p>${parsedText}</p>` : ""
+                        for (var key in val.Attributes) {
+                            if (key.indexOf("_") == -1)
+                                analysisData += `<p>` + key + ` : ${val.Attributes[key]}</p>`
+                        }
+                        if (val.Message2) {
+                            analysisData += `<p>` + val.Message2 + `</p>`;
+                        }
+                        OrderDetails = val.Attributes;
+                        setTimeout(() => {
+                            aiMessage(analysisData, false, 1000)
+                        }, 3000);
+                        break;
+                    case "card":
+                        if (val.Attributes && val.Attributes.length > 0) {
+                            for (var i = 0; i < val.Attributes.length; i++) {
+                                // let imageUrl = val.Attributes[i].imageUrl
+                                let imageTitle = val.Attributes[i].Title
+                                let imageSubtitle = val.Attributes[i].Desc
+
+                                output += `<a class='card' >
+                                <div class='card-content'>
+                                <h4 class='card-title'>${imageTitle}</h4>
+                                <p class='card-title'>Description : ${imageSubtitle}</p>`
+                                let pdetailes = val.Attributes[i].OtherDetails;
+                                if (pdetailes) {
+                                    if (pdetailes) {
+                                        for (var j = 0; j < pdetailes.length; j++) {
+                                            switch (pdetailes[j].Name) {
+                                                case "Product Price":
+                                                    output += `<p class='card-title'>Product Price : ${pdetailes[j].Value}</p>`;
+                                                    break;
+                                                case "Early Termination Fee":
+                                                    output += `<p class='card-title'>Early Termination Fee : ${pdetailes[j].Value}</p>`;
+                                                    break;
+                                                case "Upgrade / Downgrade Options":
+                                                    output += `<p class='card-title'>Upgrade / Downgrade Options : ${pdetailes[j].Value}</p>`;
+                                                    break;
+                                                case "Customer Eligibility Criteria":
+                                                    output += `<p class='card-title'>Customer Eligibility Criteria : ${pdetailes[j].Value}</p>`;
+                                                    break;
+                                                case "Special Offers or Discounts":
+                                                    output += `<p class='card-title'>Special Offers or Discounts : ${pdetailes[j].Value}</p>`;
+                                                    break;
+                                            }
+                                        }
+
+                                    }
+                                }
+                                output += `</div >
+                                </a>`
+                            }
+                            output += `<p class='card-title'>${parsedText}</p>`
+                        }
+
+                        break
+                    // 2 fulfillment is a quick reply with multi-choice buttons
+                    case "checkbox":
+                        output += `<p>${message}</p>`
+                        output += "<div class='px-3'>"
+                        for (let i = 0; i < val.Attributes.length; i++) {
+                            let reply = val.Attributes[i]
+                            let encodedText = btoa(JSON.stringify(reply))
+                            output += `<div class='form-check'><input type="checkbox" class="form-check-input" data-d="`+encodedText+`" `+(reply.Checked ? 'checked' : '')+` `+(reply.Disabled ? 'disabled' : '') + `></input> <label class="form-check-label"> ${reply.Label} </label></div>`                              
+                        }
+                        let encodedText = btoa(val.APICallData)
+                        output += `<button class="mt-2 border-dark float-right w-25" onclick='checkboxGo(this,"${encodedText}")'>Go</button>`
+                        output += "</div>"
+                        break
+                    // 2 fulfillment is a quick reply with multi-choice buttons
+                    case "buttons":
+                        let title = message
+                        let replies = val.Attributes
+                        let repliesLength = replies.length
+                        output += `<p>${title}</p>`
+                        for (let i = 0; i < repliesLength; i++) {
+                            let reply = replies[i]
+                            let encodedText = btoa(JSON.stringify(reply))
+                            output += `<button onclick='multiChoiceAnswer("${encodedText}")'>${reply.Label}</button>`
+                        }
+                        break
+                    case "takeorder":
+                        takingOrder = true;
+                        if(val.OrderDetails){
+                            OrderDetails = val.OrderDetails;
+                        }
+                        parsedText = linkify(message)
+                        output += `<p>${parsedText}</p>`
+                        break;
+                    case "takeorder-user":
+                        takingOrderUserSpecific = true;
+                        if (val.Attributes && val.Attributes.tag && val.Attributes.val) {
+                            OrderDetails[val.Attributes.tag] = val.Attributes.val;
+                        }
+                        parsedText = linkify(message)
+                        output += `<p>${parsedText}</p>`
+                        break;
+                }
+            }
+            return output
+        }
+        return `<p>${val}</p>`
+    }
+
+    function checkboxGo(ele,text) {
+        const msg = JSON.parse(atob(text));
+        var inputs = $(ele)[0].parentElement.querySelectorAll("input");
+        var checkedInput = [];
+        for(var i=0;i<inputs.length;i++){
+            if(inputs[i].checked){
+                inputs[i].outerHTML = inputs[i].outerHTML.replace('type="checkbox"', "type='checkbox' checked");
+                const msg1 = JSON.parse(atob(inputs[i].dataset.d));
+                checkedInput.push(msg1.Label)
+            }
+        }
+        var str = checkedInput.join("-");
+        msg["SelectedOptions"] = str;
+        var json = {
+            Type: 'click-event',
+            Attribute: msg,
+            Id: sessionId
+        }
+        send(json)
+    }
+
+    const multiChoiceAnswer = text => {
+        const msg = JSON.parse(atob(text));
+        const decodedText = msg.Label
+        userMessage(decodedText)
+        var json = {
+            Type: 'click-event',
+            Attribute: msg,
+            Id: sessionId
+        }
+        send(json)
+        scrollDown()
+        return
+    }
+    console.log('indexjsss')
+
+    function defaultButtonClick(type) {
+        switch (type) {
+            case 1:
+                $chatbotInput.value = "Catalog"
+                break;
+            case 2:
+                $chatbotInput.value = "Digital Service and Churn "
+                break;
+            case 3:
+                $chatbotInput.value = "I want to create a multiplay bundled offer"
+                break;
+            case 4:
+                $chatbotInput.value = "Ask about Optiva"
+                break;
+        }
+        validateMessage();
+    }
+
+    gridjson = {
+        limit: 100,
+        start: 0,
+        sortCol: 'request',
+        sortOrder: 1,
+        type: 0,
+        searchVal: ""
+    }
+    const getCannedRequest = () => {
+        $.ajax({
+            type: "POST",
+            url: baseUrl + '/CannedRequest/getcannedReq',
+            data: JSON.stringify(gridjson),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: true,
+            success: function (d) {
+                if (d) {
+                    cannedReqs = d.rows;
+                }
+
+            },
+
+        });
+    }
+    getCannedRequest();
+    function onTabPress(e) {
+        var val = $chatbotInput.value;
+        if (val) {
+            for (let i = 0; i < cannedReqs.length; i++) {
+                console.log(cannedReqs[i].Request);
+                if (cannedReqs[i].Request == val) {
+                    console.log(cannedReqs[i].Response);
+                    $chatbotInput.value = cannedReqs[i].Response;
+                    validateMessage();
+                    return;
+                }
+
+            }
+        }
+    }
+
+    $chatbotInput.addEventListener('keydown', function (e) {
+        if (event.which == 13) validateMessage();
+        if (event.keyCode === 9) onTabPress();
+    }, false);
+
+</script>
