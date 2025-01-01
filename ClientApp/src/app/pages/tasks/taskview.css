@@ -1,0 +1,100 @@
+.task_view{
+  /* height: calc(100% - 34px) */
+}
+.task_view p{
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+.task_view .card-body{
+  height: calc(100% - 63px);
+}
+.left_card{
+   height: 100% ; /* calc(100% - 130px); */
+  border-top: 1px solid #efefef;
+}
+.right_card{
+  padding:1rem;
+  height: 100%;
+  background-color: #e2e7ee;
+}
+.Tabs_container{
+  height: 150px;
+}
+.Tabs_container ul{
+  background: #ebeef3;
+}
+.Tabs_container .tab-content{
+  padding: 0 1rem;
+  height: calc(100% - 30px);
+  overflow: auto;
+}
+.info_top_box{
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 700px;
+  font-size: 14px;
+}
+.info_top_box .btn{
+  height: 30px;
+  margin-bottom: 0.5rem;
+}
+.table_content{
+  height: calc(100% - 0px);
+}
+
+.hide{
+  display: none !important;
+}
+
+/* Rating */
+.rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+}
+
+.rating > input{ display:none;}
+
+.rating > label {
+  position: relative;
+  width: 2rem;
+  font-size: 2rem;
+  margin: 0.5rem;
+  color: #7d8082;  
+  cursor: pointer;
+  top: 0;
+  left: 0;
+}
+.rating > label::before{ 
+  content: "\2605";
+  position: absolute;
+  opacity: 0;
+  color: #ffc107;
+}
+.rating > label:hover:before,
+.rating > label:hover ~ label:before {
+  opacity: 1 !important;
+}
+
+.rating > input:checked ~ label:before{
+  opacity:1;
+}
+
+/* .rating:hover > input:checked ~ label:before{ opacity: 0.4; } */
+
+.select-search__select {
+  z-index: 3 !important;
+}
+
+.tab-content>.active{
+  height: 100%;
+}
+
+.nav-line-tabs_custom .tab-content {
+  height: calc(100% - 58px) !important;
+}
+.mw-330px{
+  max-width: 330px !important;
+}

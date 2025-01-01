@@ -1,0 +1,13 @@
+.react-checkbox-tree{
+    height: calc(100% - 200px) !important;
+    overflow: auto !important;
+}
+.modal-body{
+    max-height: calc(100% - 200px) !important;
+    overflow: auto !important;
+}
+.chkbox_tree_body{
+    overflow: auto;
+    height: calc(100% - 140px);
+    max-height: 330px;
+}
